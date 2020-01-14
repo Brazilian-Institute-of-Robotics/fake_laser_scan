@@ -17,7 +17,7 @@ double intensities[g_SAMPLES_PER_REV];
 std_msgs::Float32 current_scan_time;
 std_msgs::Float32 last_scan_time;
 
-void main(int argc, char **argv) {
+int main(int argc, char **argv) {
   // Init
   ros::init(argc, argv, "laser_scan_publisher");
   ros::NodeHandle n;
@@ -31,7 +31,7 @@ void main(int argc, char **argv) {
   while (ros::ok()) {
     // Generate fake data for Laser scan
     for (unsigned int i = 0; i < g_SAMPLES_PER_REV; ++i) {
-      ranges[i] = count;
+      ranges[i] = 10;
       intensities[i] = 100 + count;
     }
 
@@ -58,6 +58,5 @@ void main(int argc, char **argv) {
 
   scan_pub.publish(scan);
   ++count;
-  r.sleep();
-}
+  r.sleep();}
 }

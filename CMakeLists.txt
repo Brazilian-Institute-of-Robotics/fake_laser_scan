@@ -1,4 +1,5 @@
 cmake_minimum_required(VERSION 2.8.3)
+
 project(fake_laser_scan)
 
 add_compile_options(-std=c++11)
@@ -9,33 +10,20 @@ find_package(catkin REQUIRED COMPONENTS
   std_msgs
   tf
 )
-
-include_directories(
-  include
-  ${catkin_INCLUDE_DIRS}
+catkin_package(
+)
+include_directories(include
+                    ${catkin_INCLUDE_DIRS}
 )
 
-link_directories(${catkin_LIBRARY_DIRS})
+add_executable(fake_laser_scan 
+                src/fake_laser_scan.cpp)
+# install(TARGETS fake_laserscan
+#         RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
 
-catkin_package(
-   INCLUDE_DIRS include src
-   LIBRARIES ${PROJECT_NAME}
-   CATKIN_DEPENDS roscpp
-   DEPENDS tf)
+# add_executable(fake_laserscan ${${PROJECT_NAME}_SOURCES})
 
-install(DIRECTORY include/${PROJECT_NAME}/
-    DESTINATION ${CATKIN_PACKAGE_INCLUDE_DESTINATION}
-    PATTERN ".svn" EXCLUDE
-  )
+target_link_libraries(fake_laser_scan ${catkin_LIBRARIES})
 
-add_library(fake_laser_scan
-            src/fake_scan_node.cpp
-            )
-
-target_link_libraries(fake_laser_scan
-                       ${catkin_LIBRARIES})
-
-# install(TARGETS fake_laser_scan/src
-#        ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
-#        LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
-#        )
+# install(TARGETS fake_laserscan
+#         RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})

@@ -1,3 +1,6 @@
+#ifndef FAKE_LASER_SCAN_FAKE_LASER_SCAN_H_
+#define FAKE_LASER_SCAN_FAKE_LASER_SCAN_H_
+
 // Copyright (c) 2019 The MCCR Simulator Authors.
 // All rights reserved.
 
@@ -16,17 +19,18 @@ class FakeLaserScan {
    * @brief Constructor fakeLaserScan
    */
   FakeLaserScan();
-  /**
+   /**
    * @brief Destructor fakeLaserScan
    */
-  sensor_msgs::LaserScan fakeScanSet(int argc, char **argv);
-
-  void fakeScanPublisher(ros::Publisher scan_pub, sensor_msgs::LaserScan scan);
-
   ~FakeLaserScan();
 
- private:
+  void fakeScanPublisher();
+
+  // ~FakeLaserScan();
+
+ public:
   sensor_msgs::LaserScan scan;
+  ros::Publisher scan_pub;
   const float pi = 3.14159265359;
   float laser_frequency;
   float samples_per_revolution;
@@ -37,9 +41,10 @@ class FakeLaserScan {
   float scan_time;
   float range_min;
   float range_max;
-  float ranges[];
   float range_distance;
-  float intensities[];
   float last_scan_time;
   float current_scan_time;
+  int count;
 };
+
+#endif  // FAKE_LASER_SCAN_FAKE_LASER_SCAN_H_

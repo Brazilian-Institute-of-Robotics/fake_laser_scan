@@ -16,10 +16,11 @@ include_directories(include
                     ${catkin_INCLUDE_DIRS}
 )
 
-add_executable(fake_laser_scan 
+add_executable(fake_laser_scan
                 src/fake_laser_scan.cpp)
-# install(TARGETS fake_laserscan
-#         RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
+
+install(TARGETS fake_laser_scan
+        RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
 
 # add_executable(fake_laserscan ${${PROJECT_NAME}_SOURCES})
 

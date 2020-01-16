@@ -29,18 +29,13 @@ class FakeLaserScan {
   // ~FakeLaserScan();
 
  public:
+  ros::NodeHandle n;
   sensor_msgs::LaserScan scan;
   ros::Publisher scan_pub;
   const float pi = 3.14159265359;
   float laser_frequency;
   float samples_per_revolution;
-  float angle_min;
-  float angle_max;
-  float angle_increment;
-  float time_increment;
-  float scan_time;
-  float range_min;
-  float range_max;
+  float angular_size;
   float range_distance;
   float last_scan_time;
   float current_scan_time;

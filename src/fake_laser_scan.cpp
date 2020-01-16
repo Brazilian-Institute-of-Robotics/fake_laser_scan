@@ -4,28 +4,30 @@
 
 #include "fake_laser_scan/fake_laser_scan.h"
 
-
 FakeLaserScan::FakeLaserScan() {
-  n.param<float>("laser_frequency", laser_frequency, 10.0);
-  n.param<float>("samples_per_revolution", samples_per_revolution, 400.0);
-  n.param<float>("range_distance", range_distance, 3.0);
-  n.param<float>("angular_size", angular_size, pi);
-  n.param<float>("range_min", scan.range_min, 0.0);
-  n.param<float>("range_max", scan.range_max, 20.0);
-  n.param<float>("angular_size", angular_size, pi);
+  ros::NodeHandle private_n("~");
 
-  n.param<std::string>("frame_id", scan.header.frame_id, "map");
+  private_n.param<float>("laser_frequency", laser_frequency, 10.0);
+  private_n.param<float>("samples_per_revolution", samples_per_revolution, 400.0);
+  private_n.param<float>("range_distance", range_distance, 3.0);
+  private_n.param<float>("angular_size", angular_size, pi);
+  private_n.param<float>("range_min", scan.range_min, 0.0);
+  private_n.param<float>("range_max", scan.range_max, 20.0);
+  private_n.param<float>("angular_size", angular_size, pi);
+
+  private_n.param<std::string>("frame_id", scan.header.frame_id, std::string("odom"));
 
   scan.angle_min = -angular_size/2;
   scan.angle_max =  angular_size/2;
   scan.angle_increment = angular_size / samples_per_revolution;
   scan.time_increment = (1 / laser_frequency) / (samples_per_revolution);
-
   current_scan_time = 0.0;
   count = 0;
 }
 
 void FakeLaserScan::fakeScanPublisher() {
+  ros::NodeHandle n;
+
   ros::Publisher scan_pub = n.advertise<sensor_msgs::LaserScan>("scan", 50);
   ros::Rate r(10);
   while (ros::ok()) {

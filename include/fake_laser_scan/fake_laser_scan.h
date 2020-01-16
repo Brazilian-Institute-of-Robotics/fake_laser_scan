@@ -4,10 +4,8 @@
 // Copyright (c) 2019 The MCCR Simulator Authors.
 // All rights reserved.
 
-#include <gtest/gtest.h>
 #include <ros/ros.h>
 #include <sensor_msgs/LaserScan.h>
-
 
 class FakeLaserScan {
  /**
@@ -29,7 +27,6 @@ class FakeLaserScan {
   // ~FakeLaserScan();
 
  public:
-  ros::NodeHandle n;
   sensor_msgs::LaserScan scan;
   ros::Publisher scan_pub;
   const float pi = 3.14159265359;

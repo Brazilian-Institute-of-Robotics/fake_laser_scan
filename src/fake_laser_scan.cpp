@@ -1,4 +1,3 @@
-
 // Copyright (c) 2019 Fake_Laser_Scan Authors.
 // All rights reserved.
 

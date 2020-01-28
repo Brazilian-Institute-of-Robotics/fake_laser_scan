@@ -29,7 +29,6 @@ class FakeLaserScan {
  public:
   sensor_msgs::LaserScan scan;
   ros::Publisher scan_pub;
-  const float pi = 3.14159265359;
   float laser_frequency;
   float samples_per_revolution;
   float angular_size;

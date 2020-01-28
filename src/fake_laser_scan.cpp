@@ -5,14 +5,14 @@
 
 FakeLaserScan::FakeLaserScan() {
   ros::NodeHandle private_n("~");
-
+  // Define laser scan parameters
   private_n.param<float>("laser_frequency", laser_frequency, 10.0);
   private_n.param<float>("samples_per_revolution", samples_per_revolution, 400.0);
   private_n.param<float>("range_distance", range_distance, 3.0);
-  private_n.param<float>("angular_size", angular_size, pi);
+  private_n.param<float>("angular_size", angular_size, M_PI);
   private_n.param<float>("range_min", scan.range_min, 0.0);
   private_n.param<float>("range_max", scan.range_max, 20.0);
-  private_n.param<float>("angular_size", angular_size, pi);
+  private_n.param<float>("angular_size", angular_size, M_PI);
 
   private_n.param<std::string>("frame_id", scan.header.frame_id, std::string("odom"));
 
@@ -26,10 +26,11 @@ FakeLaserScan::FakeLaserScan() {
 
 void FakeLaserScan::fakeScanPublisher() {
   ros::NodeHandle n;
-
+  // Scan Publisher.
   ros::Publisher scan_pub = n.advertise<sensor_msgs::LaserScan>("scan", 50);
   ros::Rate r(10);
   while (ros::ok()) {
+    // Set Laser scan message.
     current_scan_time = ros::Time::now().sec;
     scan.header.stamp.sec = ros::Time::now().sec;
     scan.header.stamp.nsec = ros::Time::now().nsec;
@@ -37,7 +38,7 @@ void FakeLaserScan::fakeScanPublisher() {
     scan.scan_time = current_scan_time - last_scan_time;
     scan.ranges.resize(samples_per_revolution);
     scan.intensities.resize(samples_per_revolution);
-    for (int i = 0; i <samples_per_revolution ; i++) {
+    for (int i = 0; i < samples_per_revolution ; i++) {
       scan.ranges[i] = range_distance;
       scan.intensities[i] = 2.0;
     }

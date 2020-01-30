@@ -22,20 +22,20 @@ class FakeLaserScan {
    */
   ~FakeLaserScan();
 
-  void fakeScanPublisher();
+  void runFakeLaserScan();
 
   // ~FakeLaserScan();
 
- public:
+ private:
   sensor_msgs::LaserScan scan;
   ros::Publisher scan_pub;
+  ros::Time current_scan_time;
+  ros::Time last_scan_time;
+
   float laser_frequency;
   float samples_per_revolution;
   float angular_size;
   float range_distance;
-  float last_scan_time;
-  float current_scan_time;
-  int count;
 };
 
 #endif  // FAKE_LASER_SCAN_FAKE_LASER_SCAN_H_

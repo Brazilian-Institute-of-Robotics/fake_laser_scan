@@ -20,32 +20,28 @@ FakeLaserScan::FakeLaserScan() {
   scan.angle_max =  angular_size/2;
   scan.angle_increment = angular_size / samples_per_revolution;
   scan.time_increment = (1 / laser_frequency) / (samples_per_revolution);
-  current_scan_time = 0.0;
-  count = 0;
 }
 
-void FakeLaserScan::fakeScanPublisher() {
+void FakeLaserScan::runFakeLaserScan() {
   ros::NodeHandle n;
   // Scan Publisher.
   ros::Publisher scan_pub = n.advertise<sensor_msgs::LaserScan>("scan", 50);
   ros::Rate r(10);
   while (ros::ok()) {
     // Set Laser scan message.
-    current_scan_time = ros::Time::now().sec;
-    scan.header.stamp.sec = ros::Time::now().sec;
-    scan.header.stamp.nsec = ros::Time::now().nsec;
-    scan.header.seq = count;
-    scan.scan_time = current_scan_time - last_scan_time;
+    current_scan_time = ros::Time::now();
+    scan.header.stamp.sec = current_scan_time.sec;
+    scan.header.stamp.nsec = current_scan_time.nsec;
+    scan.scan_time = (current_scan_time - last_scan_time).toSec();
     scan.ranges.resize(samples_per_revolution);
     scan.intensities.resize(samples_per_revolution);
     for (int i = 0; i < samples_per_revolution ; i++) {
       scan.ranges[i] = range_distance;
       scan.intensities[i] = 2.0;
     }
-    last_scan_time = ros::Time::now().sec;
+    last_scan_time = current_scan_time;
     scan_pub.publish(scan);
     ros::spinOnce();
-    count++;
     r.sleep();
   }
 }
@@ -56,6 +52,6 @@ FakeLaserScan::~FakeLaserScan() {
 int main(int argc, char **argv) {
   ros::init(argc, argv, "laser_scan_publisher");
   FakeLaserScan fakeLaserScan;
-  fakeLaserScan.fakeScanPublisher();
+  fakeLaserScan.runFakeLaserScan();
   return 0;
 }

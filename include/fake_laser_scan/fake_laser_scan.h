@@ -27,15 +27,14 @@ class FakeLaserScan {
   // ~FakeLaserScan();
 
  private:
-  sensor_msgs::LaserScan scan;
-  ros::Publisher scan_pub;
-  ros::Time current_scan_time;
-  ros::Time last_scan_time;
+  sensor_msgs::LaserScan scan_;
+  ros::Time current_scan_time_;
+  ros::Time last_scan_time_;
 
-  float laser_frequency;
-  float samples_per_revolution;
-  float angular_size;
-  float range_distance;
+  float laser_frequency_;
+  float samples_per_revolution_;
+  float angular_size_;
+  float range_distance_;
 };
 
 #endif  // FAKE_LASER_SCAN_FAKE_LASER_SCAN_H_
